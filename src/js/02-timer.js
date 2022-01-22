@@ -61,10 +61,10 @@ function startTimer() {
 function timeLeft() {
   const timer = refs.convertMs(Date.parse(refs.input.value) - Date.now());
   const { days, hours, minutes, seconds } = timer;
-  refs.timerDays.innerText = days;
-  refs.timerHours.innerText = hours.toString().padStart(2, 0);
-  refs.timerMinutes.innerText = minutes.toString().padStart(2, 0);
-  refs.timerSeconds.innerText = seconds.toString().padStart(2, 0);
+  refs.timerDays.textContent = days;
+  refs.timerHours.textContent = hours.toString().padStart(2, 0);
+  refs.timerMinutes.textContent = minutes.toString().padStart(2, 0);
+  refs.timerSeconds.textContent = seconds.toString().padStart(2, 0);
 }
 
 // function addLeadingZero(value) {
