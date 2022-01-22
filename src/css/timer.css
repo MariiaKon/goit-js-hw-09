@@ -11,21 +11,21 @@
   align-items: center;
   text-transform: uppercase;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 18px;
 }
 
 .value {
-  font-size: 44px;
+  font-size: 55px;
   font-weight: normal;
-  height: 60px;
+  height: 70px;
 }
 #datetime-picker {
-  height: 30px;
-  width: 250px;
+  height: 34px;
+  width: 307px;
   margin: 5px 5px 5px 15px;
 }
 button {
-  height: 30px;
+  height: 34px;
   width: 60px;
   text-transform: uppercase;
 }
