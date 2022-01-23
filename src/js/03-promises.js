@@ -4,6 +4,7 @@ const form = document.querySelector('form');
 const firstDelay = form.elements.delay;
 const step = form.elements.step;
 const amount = form.elements.amount;
+const submitBtn = document.querySelector('button');
 let DELAY = 0;
 let timerID = null;
 
@@ -12,6 +13,7 @@ firstDelay.addEventListener('blur', () => {
 });
 form.addEventListener('submit', e => {
   e.preventDefault();
+  submitBtn.disabled = true;
   createNotifications(amount.value, step.value);
 });
 
@@ -49,8 +51,9 @@ function createPromise(position, delay) {
       let resetTimeoutAfter = Number(firstDelay.value) + amount.value * step.value;
       setTimeout(() => {
         clearTimeout(timerID);
+        form.reset();
 
-        DELAY = Number(firstDelay.value);
+        submitBtn.disabled = false;
       }, resetTimeoutAfter);
     });
 }
