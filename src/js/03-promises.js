@@ -1,8 +1,56 @@
-function createPromise(position, delay) {
-  const shouldResolve = Math.random() > 0.3;
-  if (shouldResolve) {
-    // Fulfill
-  } else {
-    // Reject
+import Notiflix from 'notiflix';
+
+const form = document.querySelector('form');
+const firstDelay = form.elements.delay;
+const step = form.elements.step;
+const amount = form.elements.amount;
+let DELAY = 0;
+let timerID = null;
+
+firstDelay.addEventListener('blur', () => {
+  DELAY = Number(firstDelay.value);
+});
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  createNotifications(amount.value, step.value);
+});
+
+function createNotifications(qty, ms) {
+  let position = 1;
+  let delay = DELAY;
+
+  while (qty >= position) {
+    createPromise(position, delay);
+
+    DELAY += Number(ms);
+    position += 1;
+    delay = DELAY;
   }
+}
+
+function createPromise(position, delay) {
+  return new Promise((resolve, reject) => {
+    const shouldResolve = Math.random() > 0.3;
+    timerID = setTimeout(() => {
+      if (shouldResolve) {
+        resolve(`✅ Fulfilled promise ${position} in ${delay}ms`);
+      } else {
+        reject(`❌ Rejected promise ${position} in ${delay}ms`);
+      }
+    }, DELAY);
+  })
+    .then(success => {
+      Notiflix.Notify.success(`${success}`);
+    })
+    .catch(error => {
+      Notiflix.Notify.failure(`${error}`);
+    })
+    .finally(() => {
+      let resetTimeoutAfter = Number(firstDelay.value) + amount.value * step.value;
+      setTimeout(() => {
+        clearTimeout(timerID);
+
+        DELAY = Number(firstDelay.value);
+      }, resetTimeoutAfter);
+    });
 }
