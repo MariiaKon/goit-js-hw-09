@@ -22,7 +22,13 @@ function createNotifications(qty, ms) {
   let delay = DELAY;
 
   while (qty >= position) {
-    createPromise(position, delay);
+    createPromise(position, delay)
+      .then(success => {
+        Notiflix.Notify.success(`${success}`);
+      })
+      .catch(error => {
+        Notiflix.Notify.failure(`${error}`);
+      });
 
     DELAY += Number(ms);
     position += 1;
@@ -40,20 +46,12 @@ function createPromise(position, delay) {
         reject(`❌ Rejected promise ${position} in ${delay}ms`);
       }
     }, DELAY);
-  })
-    .then(success => {
-      Notiflix.Notify.success(`${success}`);
-    })
-    .catch(error => {
-      Notiflix.Notify.failure(`${error}`);
-    })
-    .finally(() => {
-      let resetTimeoutAfter = Number(firstDelay.value) + amount.value * step.value;
-      setTimeout(() => {
-        clearTimeout(timerID);
-        form.reset();
-
-        submitBtn.disabled = false;
-      }, resetTimeoutAfter);
-    });
+  }).finally(() => {
+    let resetTimeoutAfter = Number(firstDelay.value) + amount.value * step.value;
+    setTimeout(() => {
+      clearTimeout(timerID);
+      form.reset();
+      submitBtn.disabled = false;
+    }, resetTimeoutAfter);
+  });
 }
